@@ -1,0 +1,29 @@
+name: Vulnerability Scan
+on:
+  schedule:
+    - cron: '0 9 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f cvs/docker/web/Dockerfile .
+
+      - uses: lazy-actions/gitrivy@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
+          trivy_version: 'latest'
+          severity: 'CRITICAL,HIGH'
+          vuln_type: 'os,library'
+          ignore_unfixed: 'true'
+          # template
+          issue_title: 'Security Alert'
+          issue_label: 'trivy,vulnerability'
+          # issue_assignee
+          # fail_on_vulnerabilities
