@@ -11,7 +11,7 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f cvs/web/Dockerfile .
+          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f cvs/docker/web/Dockerfile .
 
       - uses: Azure/container-scan@v0
         with:
