@@ -12,7 +12,7 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f cvs/docker/web/Dockerfile .
+          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f docker/web/Dockerfile .
 
       - uses: lazy-actions/gitrivy@v3
         with:

@@ -1,8 +1,8 @@
 # container-image-vuln
 
 - [x] Trivy
-- [ ] Dockle
-- [ ] Hadolint
+- [x] Dockle
+- [x] Hadolint
 
 ## Links
 

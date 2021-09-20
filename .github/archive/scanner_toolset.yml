@@ -1,4 +1,4 @@
-name: scan container vulnerability by trivy
+name: Scan container vulnerability
 on:
   push
 
@@ -9,6 +9,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v1.5.0
+        with:
+          dockerfile: .docker/web/Dockerfile
+
       - name: Build an image from Dockerfile
         run: |
           docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f docker/web/Dockerfile .
@@ -17,13 +22,15 @@ jobs:
         uses: aquasecurity/trivy-action@0.0.19
         with:
           image-ref: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-results.sarif'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-      - name: Upload Trivy scan results to GitHub code scanning
-        uses: github/codeql-action/upload-sarif@v1
+      - name: Run Dockle image scanner
+        uses: hands-lab/dockle-action@v1
         with:
-          sarif_file: 'trivy-results.sarif'
+          image: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
+          exit-code: '1'
+          exit-level: WARN
