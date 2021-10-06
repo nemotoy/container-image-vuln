@@ -12,10 +12,15 @@ inputs:
     description: 'alert level (INFO, WARN, FATAL)'
     required: false
     default: 'WARN'
+  debug:
+    description: debug mode
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'docker://goodwithtech/dockle:v0.4.2'
   args:
+    - '${{ inputs.image }}'
     - '--exit-code=${{ inputs.exit-code }}'
     - '--exit-level=${{ inputs.exit-level }}'
-    - '${{ inputs.image }}'
+    - '--debug=${{ inputs.debug }}'

@@ -34,3 +34,4 @@ jobs:
           image: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
           exit-code: '0'
           exit-level: WARN
+          debug: true
