@@ -1,0 +1,36 @@
+name: Scan container vulnerability
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v1.5.0
+        with:
+          dockerfile: docker/web/Dockerfile.old
+
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f docker/web/Dockerfile.old .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.0.19
+        with:
+          image-ref: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Run Dockle image scanner
+        uses: hands-lab/dockle-action@v1
+        with:
+          image: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
+          exit-code: '0'
+          exit-level: WARN
