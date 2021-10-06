@@ -29,7 +29,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Run Dockle image scanner
-        uses: hands-lab/dockle-action@v1
+        uses: ./.github/actions/dockle
         with:
           image: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
           exit-code: '0'
