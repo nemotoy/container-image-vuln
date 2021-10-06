@@ -18,15 +18,15 @@ jobs:
         run: |
           docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f docker/web/Dockerfile.old .
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.0.20
-        with:
-          image-ref: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
-          format: 'table'
-          exit-code: '0'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@0.0.20
+      #   with:
+      #     image-ref: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
+      #     format: 'table'
+      #     exit-code: '0'
+      #     ignore-unfixed: true
+      #     vuln-type: 'os,library'
+      #     severity: 'CRITICAL,HIGH'
 
       - name: Run Dockle image scanner
         uses: ./.github/actions/dockle
