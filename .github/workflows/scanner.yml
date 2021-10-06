@@ -14,9 +14,18 @@ jobs:
         with:
           dockerfile: docker/web/Dockerfile.old
 
+      - name: Set image tag
+        id: vars # https://docs.github.com/ja/actions/learn-github-actions/contexts#steps-context
+        run: |
+          echo '::set-output name=image_tag::docker.io/nemotoy/my-web-app:${{ github.sha }}'
+
+      - name: Print image tag name
+        run: |
+          echo '${{ steps.vars.outputs.image_tag }}'
+
       - name: Build an image from Dockerfile
         run: |
-          docker build -t docker.io/nemotoy/my-web-app:${{ github.sha }} -f docker/web/Dockerfile.old .
+          docker build -t ${{ steps.vars.outputs.image_tag }} -f docker/web/Dockerfile.old .
 
       # - name: Run Trivy vulnerability scanner
       #   uses: aquasecurity/trivy-action@0.0.20
@@ -31,6 +40,6 @@ jobs:
       - name: Run Dockle image scanner
         uses: ./.github/actions/dockle
         with:
-          image: 'docker.io/nemotoy/my-web-app:${{ github.sha }}'
+          image: '${{ steps.vars.outputs.image_tag }}'
           exit-code: '0'
           exit-level: WARN
