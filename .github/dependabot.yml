@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    labels:
+      - "actions"
+    open-pull-requests-limit: 5
+    schedule:
+      interval: "weekly"
