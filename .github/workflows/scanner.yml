@@ -21,7 +21,7 @@ jobs:
 
       - name: Print image tag name
         run: |
-          echo '${{ steps.build.outputs.image_tag }}'
+          echo ${{ steps.build.outputs.image_tag }}
 
       - name: Build an image from Dockerfile
         run: |
@@ -40,6 +40,6 @@ jobs:
       - name: Run Dockle image scanner
         uses: ./.github/actions/dockle
         with:
-          image: '${{ steps.build.outputs.image_tag }}'
+          image: ${{ steps.build.outputs.image_tag }}
           exit-code: '0'
           exit-level: WARN
