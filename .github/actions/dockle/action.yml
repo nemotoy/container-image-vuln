@@ -13,19 +13,19 @@ inputs:
     required: false
     default: 'WARN'
   debug:
-    description: debug mode
+    description: 'debug mode'
     required: false
     default: 'false'
   timeout:
-    description: docker timeout. e.g) 5s, 5m...
+    description: 'docker timeout. e.g) 5s, 5m... (default: 1m30s)'
     required: false
-    default: '1m30s'
+    default: ''
 runs:
   using: 'docker'
   image: 'docker://goodwithtech/dockle:v0.4.2'
   args:
     - '${{ inputs.image }}'
-    - '--exit-code=${{ inputs.exit-code }}'
-    - '--exit-level=${{ inputs.exit-level }}'
-    - '--debug=${{ inputs.debug }}'
-    - '--timeout=${{ inputs.timeout }}'
+    - '--exit-code ${{ inputs.exit-code }}'
+    - '--exit-level ${{ inputs.exit-level }}'
+    - '--debug ${{ inputs.debug }}'
+    - '--timeout ${{ inputs.timeout }}'
