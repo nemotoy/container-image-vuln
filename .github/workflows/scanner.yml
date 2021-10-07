@@ -9,10 +9,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Lint Dockerfile
-        uses: hadolint/hadolint-action@v1.6.0
-        with:
-          dockerfile: docker/web/Dockerfile.old
+      # - name: Lint Dockerfile
+      #   uses: hadolint/hadolint-action@v1.6.0
+      #   with:
+      #     dockerfile: docker/web/Dockerfile.old
 
       - name: Set image tag
         id: build
@@ -25,7 +25,7 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t ${{ steps.build.outputs.image_tag }} -f docker/web/Dockerfile.old .
+          docker build -t ${{ steps.build.outputs.image_tag }} -f docker/web/Dockerfile .
 
       # - name: Run Trivy vulnerability scanner
       #   uses: aquasecurity/trivy-action@0.0.20
