@@ -24,6 +24,14 @@ inputs:
     description: 'output file name'
     required: false
     default: ''
+  quiet:
+    description: 'suppress log output'
+    required: false
+    default: 'false'
+  no-color:
+    description: 'suppress log output'
+    required: false
+    default: 'false'
   timeout:
     description: 'docker timeout. e.g) 5s, 5m... (default: 1m30s)'
     required: false
@@ -37,5 +45,7 @@ runs:
     - '--debug=${{ inputs.debug }}'
     - '--format=${{ inputs.format }}'
     - '--output=${{ inputs.output }}'
+    - '--quiet=${{ inputs.quiet }}'
+    - '--no-color=${{ inputs.no-color }}'
     - '--timeout=${{ inputs.timeout }}'
     - '${{ inputs.image }}'
