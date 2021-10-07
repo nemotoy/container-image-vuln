@@ -12,20 +12,15 @@ inputs:
     description: 'alert level (INFO, WARN, FATAL)'
     required: false
     default: 'WARN'
-  debug:
-    description: 'debug mode'
-    required: false
-    default: 'false'
   timeout:
     description: 'docker timeout. e.g) 5s, 5m... (default: 1m30s)'
     required: false
-    default: ''
+    default: '1m30s'
 runs:
   using: 'docker'
   image: 'docker://goodwithtech/dockle:v0.4.2'
   args:
     - '--exit-code ${{ inputs.exit-code }}'
     - '--exit-level ${{ inputs.exit-level }}'
-    - '--debug ${{ inputs.debug }}'
     - '--timeout ${{ inputs.timeout }}'
     - '${{ inputs.image }}'
