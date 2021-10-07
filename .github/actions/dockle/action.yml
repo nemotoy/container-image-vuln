@@ -24,8 +24,8 @@ runs:
   using: 'docker'
   image: 'docker://goodwithtech/dockle:v0.4.2'
   args:
-    - '${{ inputs.image }}'
     - '--exit-code ${{ inputs.exit-code }}'
     - '--exit-level ${{ inputs.exit-level }}'
     - '--debug ${{ inputs.debug }}'
     - '--timeout ${{ inputs.timeout }}'
+    - '${{ inputs.image }}'
