@@ -13,7 +13,7 @@ inputs:
     required: false
     default: 'WARN'
   format:
-    description: 'format(json)'
+    description: 'format(json or sarif)'
     required: false
     default: ''
   output:
