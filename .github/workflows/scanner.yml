@@ -43,3 +43,4 @@ jobs:
           image: ${{ steps.build.outputs.image_tag }}
           exit-code: '1'
           exit-level: WARN
+          debug: 'true'

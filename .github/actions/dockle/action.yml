@@ -12,6 +12,10 @@ inputs:
     description: 'alert level (INFO, WARN, FATAL)'
     required: false
     default: 'WARN'
+  debug:
+    description: 'debug mode'
+    required: false
+    default: 'false'
   format:
     description: 'format(json or sarif)'
     required: false
@@ -30,7 +34,8 @@ runs:
   args:
     - '--exit-code=${{ inputs.exit-code }}'
     - '--exit-level=${{ inputs.exit-level }}'
-    - '--timeout=${{ inputs.timeout }}'
+    - '--debug=${{ inputs.debug }}'
     - '--format=${{ inputs.format }}'
     - '--output=${{ inputs.output }}'
+    - '--timeout=${{ inputs.timeout }}'
     - '${{ inputs.image }}'
