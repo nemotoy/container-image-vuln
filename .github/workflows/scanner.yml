@@ -41,5 +41,5 @@ jobs:
         uses: ./.github/actions/dockle
         with:
           image: ${{ steps.build.outputs.image_tag }}
-          exit-code: '0'
+          exit-code: '1'
           exit-level: WARN
