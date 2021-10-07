@@ -12,6 +12,14 @@ inputs:
     description: 'alert level (INFO, WARN, FATAL)'
     required: false
     default: 'WARN'
+  format:
+    description: 'format(json)'
+    required: false
+    default: ''
+  output:
+    description: 'output file name'
+    required: false
+    default: ''
   timeout:
     description: 'docker timeout. e.g) 5s, 5m... (default: 1m30s)'
     required: false
@@ -23,4 +31,6 @@ runs:
     - '--exit-code=${{ inputs.exit-code }}'
     - '--exit-level=${{ inputs.exit-level }}'
     - '--timeout=${{ inputs.timeout }}'
+    - '--format=${{ inputs.format }}'
+    - '--output=${{ inputs.output }}'
     - '${{ inputs.image }}'
