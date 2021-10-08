@@ -1,9 +1,17 @@
 name: 'Runs dockle'
-description: 'Container Image Linter with dockle'
+description: 'Lints container images for vulnerabilities with dockle'
 inputs:
   image:
     description: 'image name'
     required: true
+  format:
+    description: 'result format (list, json, sarif)'
+    required: false
+    default: ''
+  output:
+    description: 'output file name'
+    required: false
+    default: ''
   exit-code:
     description: 'exit code when alerts were found'
     required: false
@@ -16,20 +24,12 @@ inputs:
     description: 'debug mode'
     required: false
     default: 'false'
-  format:
-    description: 'format(json or sarif)'
-    required: false
-    default: ''
-  output:
-    description: 'output file name'
-    required: false
-    default: ''
   quiet:
     description: 'suppress log output'
     required: false
     default: 'false'
   no-color:
-    description: 'suppress log output'
+    description: 'suppress log output [$NO_COLOR]'
     required: false
     default: 'false'
   timeout:
@@ -38,14 +38,14 @@ inputs:
     default: '1m30s'
 runs:
   using: 'docker'
-  image: 'docker://goodwithtech/dockle:v0.4.2'
+  image: 'docker://goodwithtech/dockle:v0.4.3'
   args:
-    - '--exit-code=${{ inputs.exit-code }}'
-    - '--exit-level=${{ inputs.exit-level }}'
-    - '--debug=${{ inputs.debug }}'
-    - '--format=${{ inputs.format }}'
-    - '--output=${{ inputs.output }}'
-    - '--quiet=${{ inputs.quiet }}'
+    - '-f=${{ inputs.format }}'
+    - '-o=${{ inputs.output }}'
+    - '-c=${{ inputs.exit-code }}'
+    - '-l=${{ inputs.exit-level }}'
+    - '-d=${{ inputs.debug }}'
+    - '-q=${{ inputs.quiet }}'
     - '--no-color=${{ inputs.no-color }}'
-    - '--timeout=${{ inputs.timeout }}'
+    - '-t=${{ inputs.timeout }}'
     - '${{ inputs.image }}'
