@@ -38,7 +38,7 @@ jobs:
       #     severity: 'CRITICAL,HIGH'
 
       - name: Run Dockle image scanner
-        uses: ./.github/actions/dockle
+        uses: nemotoy/dockle-action@main
         with:
           image: ${{ steps.build.outputs.image_tag }}
           exit-code: '1'
