@@ -25,7 +25,7 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t ${{ steps.build.outputs.image_tag }} -f docker/web/Dockerfile .
+          docker build -t ${{ steps.build.outputs.image_tag }} -f docker/web/Dockerfile.old .
 
       # - name: Run Trivy vulnerability scanner
       #   uses: aquasecurity/trivy-action@0.0.20
@@ -38,9 +38,14 @@ jobs:
       #     severity: 'CRITICAL,HIGH'
 
       - name: Run Dockle image scanner
-        uses: nemotoy/dockle-action@v0.0.1
+        uses: nemotoy/dockle-action@v0.0.2
         with:
           image: ${{ steps.build.outputs.image_tag }}
-          exit-code: '1'
+          exit-code: '0'
           exit-level: WARN
           debug: 'true'
+          format: 'json'
+          output: 'result.json'
+      - name: Print result
+        run: |
+          cat result.json
