@@ -1,5 +1,7 @@
 FROM nginx:1.21.3-alpine
-RUN apk upgrade busybox curl libcurl ssl_client
+# 固定バージョンを指定したい
+# https://blog.stormcat.io/post/entry/alpine-entry-apk/
+RUN apk update busybox curl=7.79.0-r0 libcurl ssl_client
 USER nginx
 EXPOSE 80
 STOPSIGNAL SIGQUIT
